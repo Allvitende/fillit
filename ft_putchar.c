@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit.h                                           :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschroed <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bschroed <bschroed@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/15 21:03:10 by bschroed          #+#    #+#             */
-/*   Updated: 2017/02/17 00:23:37 by bschroed         ###   ########.fr       */
+/*   Created: 2017/01/05 17:02:53 by bschroed          #+#    #+#             */
+/*   Updated: 2017/01/05 17:05:49 by bschroed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILLIT_H
-# define FILLIT_H
-# include <stdlib.h>
+#include "libft.h"
 
-void				ft_putstr(char const *s);
-void				*ft_memset(void *b, int c, size_t len);
-void				ft_putnbr(int n);
-void				ft_putchar(char c);
-
-#endif
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}

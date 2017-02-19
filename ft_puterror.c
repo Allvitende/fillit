@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-void	ft_putstr(char const *s)
+void	ft_puterror(char const *s)
 {
 	int i;
 
@@ -21,7 +21,7 @@ void	ft_putstr(char const *s)
 	{
 		while (s[i] != '\0')
 		{
-			write(1, &s[i], 1);
+			write(2, &s[i], 1);
 			i++;
 		}
 	}

@@ -14,7 +14,7 @@
 # define FILLIT_H
 # include <stdlib.h>
 
-void				ft_putstr(char const *s);
+void				ft_puterror(char const *s);
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_putnbr(int n);
 void				ft_putchar(char c);

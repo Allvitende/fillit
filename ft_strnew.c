@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit.h                                           :+:      :+:    :+:   */
+/*   ft_strnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bschroed <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/15 21:03:10 by bschroed          #+#    #+#             */
-/*   Updated: 2017/02/17 00:23:37 by bschroed         ###   ########.fr       */
+/*   Created: 2017/01/16 01:26:57 by bschroed          #+#    #+#             */
+/*   Updated: 2017/01/16 01:26:59 by bschroed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILLIT_H
-# define FILLIT_H
-# include <stdlib.h>
+#include "libft.h"
 
-void				ft_puterror(char const *s);
-void				*ft_memset(void *b, int c, size_t len);
-void				ft_putnbr(int n);
-void				ft_putchar(char c);
-char				*ft_strnew(size_t size);
+char	*ft_strnew(size_t size)
+{
+	char	*ret;
+	size_t	end;
 
-#endif
+	ret = (char *)malloc(sizeof(char) * (size + 1));
+	end = size + 1;
+	if (!ret)
+		return (NULL);
+	while (end--)
+		*ret++ = '\0';
+	return (ret - (size + 1));
+}

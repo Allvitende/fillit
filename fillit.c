@@ -82,39 +82,61 @@
 // 		ft_puterror("VALID FILE\n");
 // 		exit(EXIT_SUCCESS);
 // 	}
-// }
 
-int		valid_character(int c, int with_newline)
+int		check_line(char *buf)
 {
-	if (with_newline)
-		return (c == '.' || c == '#' || c == '\n');
+	unsigned int	i;
+
+	i = 0;
+	while ((buf[i] == '.' || buf[i] == '#') && i < 4)
+		i++;
+	if (i == 4 && buf[i] == '\n')
+		return (TRUE);
 	else
-		return (c == '.' || c == '#' );
+		return (FALSE);
 }
 
 int		check_block(char *buf)
 {
-	
+	unsigned int	i;
+	unsigned int	line_count;
+
+	i = 0;
+	line_count = 0;
+	while (line_count < 4 && check_line(buf) == TRUE)
+	{
+		line_count++;
+		buf += 5;
+	}
+	if (line_count == 4 && *buf == '\n')
+		return (TRUE);
+	return (FALSE);
 }
 
 char	**get_pieces(char *buf)
 {
-	int		i;
-	char	piece_arr[25][20];
+	unsigned int	i;
+	char			piece_arr[25][20];
 
 	i = 0;
 	ft_memset(piece_arr, 0, sizeof(piece_arr));
-	while (buf < 546 && check_block(buf) == TRUE)
+	while (buf < 546 && *buf != 0)
 	{
-		piece_arr[i] = extract_piece(buf);
-		buf += 21;
-		i++;
+		if (check_block(buf) == TRUE)
+		{
+			piece_arr[i] = extract_piece(buf);
+			buf += 21;
+			i++;
+		}
+		else
+			exit(EXIT_FAILURE);
 	}
 }
 
 char	*read_file(char *file)
 {
 	int		fd;
+	int		bytes_read;
 	char	buf[546];
 
 	if ((fd = open(file, O_RDONLY)) == -1)
@@ -123,14 +145,10 @@ char	*read_file(char *file)
 		exit(EXIT_FAILURE);
 	}
 	ft_memset(buf, 0, sizeof(buf));
-	if (read(fd, buf, 546) == -1)
+	bytes_read = read(fd, buf, 546);
+	if (bytes_read % 21 != 0 || bytes_read == -1 || read(fd, buf, 1))
 	{
-		ft_puterror("ERROR reading file.\n");
-		exit(EXIT_FAILURE);
-	}
-	if (read(fd, buf, 1))
-	{
-		ft_puterror("ERROR. Exceeds maximum file size.\n");
+		ft_puterror("ERROR. Invalid file.\n");
 		exit(EXIT_FAILURE);
 	}
 	if (close(fd) == -1)

@@ -18,70 +18,27 @@
 //For errors also change file descriptor for errors
 // #define GRD(a, b) do{if(a) {b;}}while(0)
 
-// void	check_file(char *buf)
-// {
-// 	unsigned int	i;
-// 	unsigned int	char_count;
-// 	unsigned int	valid_block_count;
-// 	unsigned int	valid_line_count;
-//
-// 	i = 0;
-// 	char_count = 0;
-// 	valid_block_count = 0;
-// 	valid_line_count = 0;
-// 	while (buf[i] != '\0')
-// 	{
-// 		if (!valid_character(buf[i], TRUE))
-// 		{
-// 			ft_puterror("ERROR. Invalid file characters\n");
-// 			exit(EXIT_FAILURE);
-// 		}
-// 		i++;
-// 	}
-// 	i = 0;
-// 	while ((valid_character(buf[i], FALSE)) && buf[i] != '\0')
-// 	{
-// 		char_count++;
-// 		i++;
-// 		if (char_count == 4 && buf[i] == '\n' && (valid_character(buf[i + 1], FALSE)) && valid_line_count < 4)
-// 		{
-// 			valid_line_count++;
-// 			char_count = 0;
-// 			i++;
-// 			continue;
-// 		}
-// 		if (char_count == 4 && buf[i] == '\n' && buf[i + 1] == '\n' && valid_line_count == 3)
-// 		{
-// 			if (valid_block(buf[i + 1]) == FALSE)
-// 			{
-// 				ft_puterror("ERROR. File contains invalid pieces\n");
-// 				exit(EXIT_FAILURE);
-// 			}
-// 			else
-// 			{
-// 				valid_block_count++;
-// 				valid_line_count = 0;
-// 				char_count = 0;
-// 				i += 2;
-// 				continue;
-// 			}
-// 		}
-// 	}
-// 	if (char_count != 0 || valid_line_count != 0 || valid_block_count < 1)
-// 	{
-// 		ft_puterror("ERROR. File contains invalid lines\n");
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	else if (valid_block_count > 26)
-// 	{
-// 		ft_puterror("ERROR. Too many tetriminos\n");
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	else
-// 	{
-// 		ft_puterror("VALID FILE\n");
-// 		exit(EXIT_SUCCESS);
-// 	}
+int		valid_piece(char *buf)
+{
+	unsigned int	i;
+	unsigned int 	connections;
+
+	i = 0;
+	connections = 0;
+	while (i < 20)
+	{
+		if (buf[i] == '#' && buf[i + 1] == '#')
+			connections++;
+		if (i > 0 && (buf[i] == '#' && buf[i - 1] == '#'))
+			connections++;
+		if (i < 16 && (buf[i] == '#' && buf[i + 5] == '#'))
+			connections++;
+		if (i > 4 && (buf[i] == '#' && buf[i - 5] == '#'))
+			connections++;
+		i++;
+	}
+	return (connections == 6 || connections == 8);
+}
 
 int		check_line(char *buf)
 {
@@ -100,6 +57,7 @@ int		check_block(char *buf)
 {
 	unsigned int	i;
 	unsigned int	line_count;
+	char			*buf_cpy;
 
 	i = 0;
 	line_count = 0;
@@ -109,7 +67,7 @@ int		check_block(char *buf)
 		buf += 5;
 	}
 	if (line_count == 4 && *buf == '\n')
-		return (TRUE);
+		return (valid_piece(buf_cpy));
 	return (FALSE);
 }
 

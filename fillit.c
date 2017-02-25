@@ -25,13 +25,13 @@ int		valid_piece(char *buf)
 
 	i = 0;
 	connections = 0;
-	while (i < 20)
+	while (i < 19 && buf[i] != 0)
 	{
 		if (buf[i] == '#' && buf[i + 1] == '#')
 			connections++;
 		if (i > 0 && (buf[i] == '#' && buf[i - 1] == '#'))
 			connections++;
-		if (i < 16 && (buf[i] == '#' && buf[i + 5] == '#'))
+		if (i < 15 && (buf[i] == '#' && buf[i + 5] == '#'))
 			connections++;
 		if (i > 4 && (buf[i] == '#' && buf[i - 5] == '#'))
 			connections++;

@@ -18,6 +18,22 @@
 //For errors also change file descriptor for errors
 // #define GRD(a, b) do{if(a) {b;}}while(0)
 
+int		hash_count(char *buf)
+{
+	unsigned int	i;
+	unsigned int	hash_count;
+
+	i = 0;
+	hash_count = 0;
+	while (i < 19 && buf[i] != 0)
+	{
+		if (buf[i] == '#')
+			hash_count++;
+		i++;
+	}
+	return (hash_count == 4);
+}
+
 int		valid_piece(char *buf)
 {
 	unsigned int	i;
@@ -25,6 +41,8 @@ int		valid_piece(char *buf)
 
 	i = 0;
 	connections = 0;
+	if (hash_count(buf) == FALSE)
+		return (FALSE);
 	while (i < 19 && buf[i] != 0)
 	{
 		if (buf[i] == '#' && buf[i + 1] == '#')
@@ -61,6 +79,7 @@ int		check_block(char *buf)
 
 	i = 0;
 	line_count = 0;
+	buf_cpy = buf;
 	while (line_count < 4 && check_line(buf) == TRUE)
 	{
 		line_count++;
@@ -82,13 +101,14 @@ char	**get_pieces(char *buf)
 	{
 		if (check_block(buf) == TRUE)
 		{
-			piece_arr[i] = extract_piece(buf);
+			piece_arr[i] = "VALID";
 			buf += 21;
 			i++;
 		}
 		else
 			exit(EXIT_FAILURE);
 	}
+	return (piece_arr);
 }
 
 char	*read_file(char *file)
@@ -117,10 +137,13 @@ char	*read_file(char *file)
 	return(buf);
 }
 
-int	main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	char	*buf;
 	char	**pieces;
+	int		i;
+
+	i = 0;
 	if (argc != 2)
 	{
 		ft_puterror("Usage: ./fillit file\n");
@@ -128,5 +151,10 @@ int	main(int argc, char **argv)
 	}
 	buf = read_file(argv[1]);
 	pieces = get_pieces(buf);
+	while (pieces[i] != 0)
+	{
+		ft_putstr(pieces[i]);
+		i++;
+	}
 	return (0);
 }

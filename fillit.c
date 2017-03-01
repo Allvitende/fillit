@@ -90,25 +90,27 @@ int		check_block(char *buf)
 	return (FALSE);
 }
 
-char	**get_pieces(char *buf)
+void	get_pieces(char *buf)
 {
-	unsigned int	i;
-	char			piece_arr[25][20];
+	//unsigned int	i;
+	unsigned int	loop_count;
+	//char			piece_arr[25][20];
 
-	i = 0;
-	ft_memset(piece_arr, 0, sizeof(piece_arr));
-	while (buf < 546 && *buf != 0)
+	//i = 0;
+	loop_count = 0;
+	//ft_memset(piece_arr, 0, sizeof(piece_arr));
+	while (loop_count < 26 && *buf != 0)
 	{
 		if (check_block(buf) == TRUE)
 		{
-			piece_arr[i] = "VALID";
+			ft_putstr("Valid\n");
 			buf += 21;
-			i++;
+			loop_count++;
+			//i++;
 		}
 		else
 			exit(EXIT_FAILURE);
 	}
-	return (piece_arr);
 }
 
 char	*read_file(char *file)
@@ -116,6 +118,7 @@ char	*read_file(char *file)
 	int		fd;
 	int		bytes_read;
 	char	buf[546];
+	char	*buf_cpy;
 
 	if ((fd = open(file, O_RDONLY)) == -1)
 	{
@@ -134,13 +137,14 @@ char	*read_file(char *file)
 		ft_puterror("ERROR closing file.\n");
 		exit(EXIT_FAILURE);
 	}
-	return(buf);
+	buf_cpy = ft_strdup(buf);
+	return(buf_cpy);
 }
 
 int		main(int argc, char **argv)
 {
 	char	*buf;
-	char	**pieces;
+	//char	**pieces;
 	int		i;
 
 	i = 0;
@@ -150,11 +154,11 @@ int		main(int argc, char **argv)
 		return (1);
 	}
 	buf = read_file(argv[1]);
-	pieces = get_pieces(buf);
-	while (pieces[i] != 0)
-	{
-		ft_putstr(pieces[i]);
-		i++;
-	}
+	get_pieces(buf);
+	// while (pieces[i] != 0)
+	// {
+	// 	ft_putstr(pieces[i]);
+	// 	i++;
+	// }
 	return (0);
 }

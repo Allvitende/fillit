@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit.h                                           :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bschroed <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/15 21:03:10 by bschroed          #+#    #+#             */
-/*   Updated: 2017/02/17 00:23:37 by bschroed         ###   ########.fr       */
+/*   Created: 2017/01/16 02:05:07 by bschroed          #+#    #+#             */
+/*   Updated: 2017/01/16 02:05:08 by bschroed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILLIT_H
-# define FILLIT_H
-# include <stdlib.h>
+#include "libft.h"
 
-void				ft_puterror(char const *s);
-void				*ft_memset(void *b, int c, size_t len);
-void				ft_putchar(char c);
-void				ft_putstr(char const *s);
-char				*ft_strdup(const char *s1);
-size_t				ft_strlen(const char *s);
-char				*ft_strnew(size_t size);
+char	*ft_strdup(const char *s1)
+{
+	char *str;
+	char *ret;
 
-#endif
+	str = ft_strnew(ft_strlen(s1));
+	if (!str)
+		return (NULL);
+	ret = str;
+	while (*s1)
+		*str++ = *s1++;
+	return (ret);
+}

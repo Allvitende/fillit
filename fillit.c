@@ -14,9 +14,17 @@
 #include <unistd.h>
 #include <fcntl.h>
 #define	TRUE  1
-#define FALSE 0
-//For errors also change file descriptor for errors
-// #define GRD(a, b) do{if(a) {b;}}while(0)
+#define	FALSE 0
+
+char	*trim_piece(char *buf)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (buf[i] != '#')
+		i++;
+
+}
 
 int		hash_count(char *buf)
 {
@@ -37,7 +45,7 @@ int		hash_count(char *buf)
 int		valid_piece(char *buf)
 {
 	unsigned int	i;
-	unsigned int 	connections;
+	unsigned int	connections;
 
 	i = 0;
 	connections = 0;
@@ -104,6 +112,7 @@ void	get_pieces(char *buf)
 		if (check_block(buf) == TRUE)
 		{
 			ft_putstr("Valid\n");
+			trim_piece(buf);
 			buf += 21;
 			loop_count++;
 			//i++;

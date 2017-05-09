@@ -16,6 +16,11 @@
 #define	TRUE  1
 #define	FALSE 0
 
+void	store_piece(char **piece)
+{
+
+}
+
 char	*copy_piece(char *buf)
 {
 	int i;
@@ -116,22 +121,17 @@ int		check_block(char *buf)
 
 void	get_pieces(char *buf)
 {
-	//unsigned int	i;
 	unsigned int	loop_count;
-	//char			piece_arr[25][20];
 
-	//i = 0;
 	loop_count = 0;
-	//ft_memset(piece_arr, 0, sizeof(piece_arr));
 	while (loop_count < 26 && *buf != 0)
 	{
 		if (check_block(buf) == TRUE)
 		{
 			ft_putstr("Valid\n");
-			trim_piece(buf);
+			store_piece(copy_piece(buf));
 			buf += 21;
 			loop_count++;
-			//i++;
 		}
 		else
 			exit(EXIT_FAILURE);
@@ -169,7 +169,6 @@ char	*read_file(char *file)
 int		main(int argc, char **argv)
 {
 	char	*buf;
-	//char	**pieces;
 	int		i;
 
 	i = 0;
@@ -180,10 +179,5 @@ int		main(int argc, char **argv)
 	}
 	buf = read_file(argv[1]);
 	get_pieces(buf);
-	// while (pieces[i] != 0)
-	// {
-	// 	ft_putstr(pieces[i]);
-	// 	i++;
-	// }
 	return (0);
 }

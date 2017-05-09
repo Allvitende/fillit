@@ -16,14 +16,30 @@
 #define	TRUE  1
 #define	FALSE 0
 
-char	*trim_piece(char *buf)
+char	*copy_piece(char *buf)
 {
-	unsigned int	i;
+	int i;
+	int j;
+	char	piece[4][5];
 
 	i = 0;
-	while (buf[i] != '#')
-		i++;
-
+	j = 0;
+	while (*buf != 0)
+	{
+		if (*buf != '\n')
+		{
+			piece[i][j] = *buf;
+			j++;
+		}
+		if (*buf == '\n')
+		{
+			piece[i][j] = '\0';
+			i++;
+			j = 0;
+		}
+		buf++;
+	}
+	return (piece);
 }
 
 int		hash_count(char *buf)

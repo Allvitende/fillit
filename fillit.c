@@ -16,9 +16,23 @@
 #define	TRUE  1
 #define	FALSE 0
 
-void	store_piece(char **piece)
+//trim rows then columns!
+void	trim_piece(char **piece)
 {
+	int i;
+	int j;
 
+	i = 0;
+	while (i < 4)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			if (piece[i][j] == '#')
+			j++;
+		}
+		i++;
+	}
 }
 
 char	*copy_piece(char *buf)
@@ -29,7 +43,8 @@ char	*copy_piece(char *buf)
 
 	i = 0;
 	j = 0;
-	while (*buf != 0)
+	k = 0;
+	while (k < 21)
 	{
 		if (*buf != '\n')
 		{
@@ -43,6 +58,7 @@ char	*copy_piece(char *buf)
 			j = 0;
 		}
 		buf++;
+		k++;
 	}
 	return (piece);
 }
@@ -129,7 +145,7 @@ void	get_pieces(char *buf)
 		if (check_block(buf) == TRUE)
 		{
 			ft_putstr("Valid\n");
-			store_piece(copy_piece(buf));
+			trim_piece(copy_piece(buf));
 			buf += 21;
 			loop_count++;
 		}

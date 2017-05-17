@@ -17,28 +17,25 @@
 #define	FALSE 0
 
 //trim rows then columns!
-void	trim_piece(char **piece)
+char	**trim_piece(char **piece)
 {
-	int i;
-	int j;
+	unsigned int i;
 
 	i = 0;
 	while (i < 4)
 	{
-		j = 0;
-		while (j < 4)
-		{
-			if (piece[i][j] == '#')
-			j++;
-		}
+		if (hash_count(piece[i], 4) == 0)
+			//copy into new array without this row;
 		i++;
 	}
+	while ()
+
 }
 
-char	*copy_piece(char *buf)
+char	**copy_piece(char *buf)
 {
-	int i;
-	int j;
+	unsigned int i;
+	unsigned int j;
 	char	piece[4][5];
 
 	i = 0;
@@ -63,20 +60,20 @@ char	*copy_piece(char *buf)
 	return (piece);
 }
 
-int		hash_count(char *buf)
+int		hash_count(char *buf, int index)
 {
 	unsigned int	i;
 	unsigned int	hash_count;
 
 	i = 0;
 	hash_count = 0;
-	while (i < 19 && buf[i] != 0)
+	while (i < index && buf[i] != 0)
 	{
 		if (buf[i] == '#')
 			hash_count++;
 		i++;
 	}
-	return (hash_count == 4);
+	return (hash_count);
 }
 
 int		valid_piece(char *buf)
@@ -86,7 +83,7 @@ int		valid_piece(char *buf)
 
 	i = 0;
 	connections = 0;
-	if (hash_count(buf) == FALSE)
+	if (hash_count(buf, 19) != 4)
 		return (FALSE);
 	while (i < 19 && buf[i] != 0)
 	{

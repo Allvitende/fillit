@@ -16,20 +16,38 @@
 #define	TRUE  1
 #define	FALSE 0
 
-//trim rows then columns!
+char	**remove_cols(char **piece, unsigned int arr_height)
+{
+
+}
+
+char	**remove_row(char **piece, unsigned int row)
+{
+	
+}
+
 char	**trim_piece(char **piece)
 {
-	unsigned int i;
+	unsigned int	i;
+	unsigned int	rows_removed;
+	unsigned int	arr_height;
+	char			**new_piece;
 
 	i = 0;
+	rows_removed = 0;
 	while (i < 4)
 	{
 		if (hash_count(piece[i], 4) == 0)
-			//copy into new array without this row;
+		{
+			new_piece = remove_row(piece, i);
+			rows_removed++;
+		}
 		i++;
 	}
-	while ()
-
+	i = 0;
+	arr_height = 4 - rows_removed;
+	new_piece = remove_cols(new_piece, arr_height);
+	return (new_piece);
 }
 
 char	**copy_piece(char *buf)

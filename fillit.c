@@ -21,9 +21,35 @@ char	**remove_cols(char **piece, unsigned int arr_height)
 
 }
 
-char	**remove_row(char **piece, unsigned int row)
+char	**remove_row(char **piece, unsigned int delete_row)
 {
-	
+	unsigned int	i;
+	unsigned int	j;
+	unsigned int	row_count;
+	char			**new_piece;
+
+	i = 0;
+	j = 0;
+	row_count = sizeof(piece) / sizeof(piece[0]);
+	new_piece = malloc(sizeof(*new_piece) * (row_count - 1));
+	if (new_piece)
+	{
+		while (i < (row_count - 1))
+		{
+			new_piece[i] = malloc(sizeof(*new_piece[i]) * 5);
+			i++;
+		}
+	}
+	i = 0;
+	while (i < row_count)
+	{
+		if (piece[i] == delete_row)
+		{
+			i++;
+			continue;
+		}
+	}
+
 }
 
 char	**trim_piece(char **piece)

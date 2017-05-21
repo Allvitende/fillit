@@ -43,13 +43,19 @@ char	**remove_row(char **piece, unsigned int delete_row)
 	i = 0;
 	while (i < row_count)
 	{
-		if (piece[i] == delete_row)
+		if (i == delete_row)
 		{
 			i++;
 			continue;
 		}
+		else
+		{
+			piece[i] = new_piece[j];
+			i++;
+			j++;
+		}
 	}
-
+	return (new_piece);
 }
 
 char	**trim_piece(char **piece)

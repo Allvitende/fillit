@@ -6,7 +6,7 @@
 /*   By: bschroed <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 21:03:10 by bschroed          #+#    #+#             */
-/*   Updated: 2017/02/17 00:23:37 by bschroed         ###   ########.fr       */
+/*   Updated: 2017/08/17 21:00:47 by aquint           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void				ft_putstr(char const *s);
 char				*ft_strdup(const char *s1);
 size_t				ft_strlen(const char *s);
 char				*ft_strnew(size_t size);
+void				ft_putnbr(int n);
 
 char *piece_a = {"####"};
 char *piece_b = {"#\n#\n#\n#"};
@@ -43,12 +44,3 @@ char *piece_r = {"##.\n.##"};
 char *piece_s = {".#\n##\n#."};
 
 #endif
-
-...#
-...#
-..##
-....
-
-{"...#", "...#", "..##", "...."}
-{"...#", "...#", "..##"}
-{".#", ".#", "##"}

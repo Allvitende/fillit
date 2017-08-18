@@ -6,11 +6,12 @@
 #    By: bschroed <bschroed@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/05 14:04:01 by bschroed          #+#    #+#              #
-#    Updated: 2017/02/13 20:57:04 by bschroed         ###   ########.fr        #
+#    Updated: 2017/08/17 22:09:35 by aquint           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
+PROGRAM = fillit
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 SRC =
@@ -19,9 +20,18 @@ YELLOW = \x1b[33;01m
 RED = \x1b[31;01m
 NO_COLOR = \x1b[0m
 
-SRC += fillit.c
-SRC += ft_putstr.c
-SRC += ft_memset.c
+SRCDIR = ./libft/*.c
+
+SRC += libft/ft_putstr.c
+SRC += libft/ft_memset.c
+SRC += libft/ft_putnbr.c
+SRC += libft/ft_putchar.c
+SRC += libft/ft_puterror.c
+SRC += libft/ft_strdup.c
+SRC += libft/ft_strnew.c
+SRC += libft/ft_strlen.c
+
+MAIN = fillit.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -41,6 +51,10 @@ $(NAME): $(OBJ)
 	@echo "$(YELLOW)>>CREATING LIBRARY...$(NO_COLOR)"
 	@ar rcs $@ $+
 	@echo "$(GREEN)>>DONE!"
+
+$(PROGRAM): $(NAME) $(MAIN)
+	$(CC) $(MAIN) -L. -lft $(CFLAGS) -o $(PROGRAM)
+
 
 clean:
 	@echo "$(RED)>>DELETING OBJECT FILES..."

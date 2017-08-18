@@ -6,18 +6,17 @@
 /*   By: bschroed <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 21:00:14 by bschroed          #+#    #+#             */
-/*   Updated: 2017/08/17 22:46:16 by aquint           ###   ########.fr       */
+/*   Updated: 2017/02/17 00:23:35 by bschroed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft/libft.h"
+#include "fillit.h"
 #include <unistd.h>
 #include <fcntl.h>
-#include <string.h>
 #define	TRUE  1
 #define	FALSE 0
 
-/*char	**remove_cols(char **piece, unsigned int arr_height)
+char	**remove_cols(char **piece, unsigned int arr_height)
 {
 
 }
@@ -58,7 +57,7 @@ char	**remove_row(char **piece, unsigned int delete_row)
 	}
 	return (new_piece);
 }
-*
+
 char	**trim_piece(char **piece)
 {
 	unsigned int	i;
@@ -82,7 +81,7 @@ char	**trim_piece(char **piece)
 	new_piece = remove_cols(new_piece, arr_height);
 	return (new_piece);
 }
-*
+
 char	**copy_piece(char *buf)
 {
 	unsigned int i;
@@ -110,8 +109,8 @@ char	**copy_piece(char *buf)
 	}
 	return (piece);
 }
-*/
-int		hash_count(char *buf, unsigned int index)
+
+int		hash_count(char *buf, int index)
 {
 	unsigned int	i;
 	unsigned int	hash_count;
@@ -192,19 +191,13 @@ void	get_pieces(char *buf)
 	{
 		if (check_block(buf) == TRUE)
 		{
-			ft_putnbr(loop_count);
 			ft_putstr("Valid\n");
-			ft_putstr(buf);
-			//t_list *ft_shapetolist(char *str);
-		//	ft_strsplit(buf, '\n'); //Ideas for this -> Use strncpy or memncpy to cpy 21 bits to a new str and then strsplit to create a 2d	array. Alternative, trim rows and columns from the string instead of from the  and then strsplit. 
+			trim_piece(copy_piece(buf));
 			buf += 21;
 			loop_count++;
 		}
 		else
-		{
-			ft_puterror("error: invalid block\n");
 			exit(EXIT_FAILURE);
-		}
 	}
 }
 
@@ -217,19 +210,19 @@ char	*read_file(char *file)
 
 	if ((fd = open(file, O_RDONLY)) == -1)
 	{
-		ft_puterror("error: opening file.\n");
+		ft_puterror("ERROR opening file.\n");
 		exit(EXIT_FAILURE);
 	}
 	ft_memset(buf, 0, sizeof(buf));
 	bytes_read = read(fd, buf, 546);
-	if (bytes_read % 21 != 0 || bytes_read == -1 || read(fd, buf, 1)) //find out if /n at very end of file
+	if (bytes_read % 21 != 0 || bytes_read == -1 || read(fd, buf, 1))
 	{
-		ft_puterror("error: invalid file.\n");
+		ft_puterror("ERROR. Invalid file.\n");
 		exit(EXIT_FAILURE);
 	}
 	if (close(fd) == -1)
 	{
-		ft_puterror("error: closing file.\n");
+		ft_puterror("ERROR closing file.\n");
 		exit(EXIT_FAILURE);
 	}
 	buf_cpy = ft_strdup(buf);

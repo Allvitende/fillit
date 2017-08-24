@@ -1,4 +1,4 @@
-# **************************************************************************** #
+#**************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
@@ -6,7 +6,7 @@
 #    By: bschroed <bschroed@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/05 14:04:01 by bschroed          #+#    #+#              #
-#    Updated: 2017/08/17 22:09:35 by aquint           ###   ########.fr        #
+#    Updated: 2017/08/24 00:12:14 by aquint           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,16 @@ NAME = libft.a
 PROGRAM = fillit
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+MEMFLAGS = -fsanitize=address
 SRC =
 GREEN = \x1b[32;01m
 YELLOW = \x1b[33;01m
 RED = \x1b[31;01m
 NO_COLOR = \x1b[0m
 
-SRCDIR = ./libft/*.c
+SRCFIL += fillit.c
+SRCFIL += store_piece.c
+SRCFIL += piece_validation.c
 
 SRC += libft/ft_putstr.c
 SRC += libft/ft_memset.c
@@ -40,7 +43,7 @@ increment	= $1 x
 n			:= x
 COUNTER		= $(words $n)$(eval n := $(call increment, $n))
 
-all: $(NAME)
+all: $(PROGRAM)
 
 $(OBJ): %.o: %.c
 	@printf "$(YELLOW)\r>>COMPILING: [$(GREEN)%d$(YELLOW)/$(GREEN)%d$(YELLOW)]" $(COUNTER) $(MAX)
@@ -52,10 +55,13 @@ $(NAME): $(OBJ)
 	@ar rcs $@ $+
 	@echo "$(GREEN)>>DONE!"
 
-$(PROGRAM): $(NAME) $(MAIN)
-	$(CC) $(MAIN) -L. -lft $(CFLAGS) -o $(PROGRAM)
+$(PROGRAM):$(SRCFIL)
+	$(MAKE) -C ./libft 
+	$(CC) $(SRCFIL) -L libft -lft $(CFLAGS) -o $(PROGRAM)
 
-
+filclean: 
+	$(MAKE) clean -C ./libft  
+	rm $(PROGRAM)
 clean:
 	@echo "$(RED)>>DELETING OBJECT FILES..."
 	@rm -f $(OBJ)

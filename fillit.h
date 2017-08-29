@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <string.h>
 # define TRUE 1
-# define False 0
+# define FALSE 0
 
 typedef struct	s_piece
 {
@@ -34,9 +34,8 @@ typedef struct	s_piece
  * might be where print of final comes in
  */
 
-
 /*
- * piece_validation.c
+ *piece_validation.c
  */
 int					hash_count(char *buf, unsigned int index); //tests num of #
 int					valid_piece(char *buf); //tests valid piece config
@@ -57,6 +56,11 @@ t_piece				*get_pieces(char *buf); //sends file to be validated, saves piece as 
 /*
  *  recursion puzzle solver
  */
+int				r_fillit_solver(char **board, t_piece *head, int row, int col);
+int				valid_check(char **board, char **piece,  int row, int col);
+char 			**place_piece(char **board, char **piece, int row, int col);
+char 			**fillit_board(int size);
+int				solve_print(t_piece *head);
 
 /* quick reaction of functions we likely need. 
  *  * Set 2day array square based on minimum possibility

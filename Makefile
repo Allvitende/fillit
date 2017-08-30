@@ -6,7 +6,7 @@
 #    By: bschroed <bschroed@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/05 14:04:01 by bschroed          #+#    #+#              #
-#    Updated: 2017/08/29 19:05:45 by aquint           ###   ########.fr        #
+#    Updated: 2017/08/29 19:57:57 by aquint           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ NO_COLOR = \x1b[0m
 SRCFIL += fillit.c
 SRCFIL += store_piece.c
 SRCFIL += piece_validation.c
+SRCFIL += solve_fillit.c
 
 SRC += libft/ft_putstr.c
 SRC += libft/ft_memset.c

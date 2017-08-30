@@ -6,7 +6,7 @@
 /*   By: bschroed <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 21:03:10 by bschroed          #+#    #+#             */
-/*   Updated: 2017/08/24 00:23:02 by aquint           ###   ########.fr       */
+/*   Updated: 2017/08/29 20:47:54 by aquint           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ char				**array_piece(char *buf, char c); //creates piece array
 t_piece				*get_pieces(char *buf); //sends file to be validated, saves piece as linked list
 
 /*
- *  recursion puzzle solver
+ *  solve_fillit.c
  */
 int				r_fillit_solver(char **board, t_piece *head, int row, int col);
-int				valid_check(char **board, char **piece,  int row, int col);
+int				valid_check(char **board, char **piece, unsigned  int row, unsigned int col);
 char 			**place_piece(char **board, char **piece, int row, int col);
 char 			**fillit_board(int size);
 int				solve_print(t_piece *head);

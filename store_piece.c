@@ -6,11 +6,11 @@
 /*   By: bschroed <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 21:00:14 by bschroed          #+#    #+#             */
-/*   Updated: 2017/08/24 00:09:22 by aquint           ###   ########.fr       */
+/*   Updated: 2017/08/29 19:04:49 by aquint           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft/libft.h"
+#include "./libft_lq/libft.h"
 #include "fillit.h"
 
 void	piece_append(t_piece **head, t_piece *new)

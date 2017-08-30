@@ -6,11 +6,11 @@
 /*   By: bschroed <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 21:00:14 by bschroed          #+#    #+#             */
-/*   Updated: 2017/08/24 00:10:14 by aquint           ###   ########.fr       */
+/*   Updated: 2017/08/29 19:04:36 by aquint           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft/libft.h"
+#include "./libft_lq/libft.h"
 #include "fillit.h"
 
 int		main(int argc, char **argv)

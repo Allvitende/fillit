@@ -6,7 +6,7 @@
 #    By: bschroed <bschroed@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/05 14:04:01 by bschroed          #+#    #+#              #
-#    Updated: 2017/08/24 00:12:14 by aquint           ###   ########.fr        #
+#    Updated: 2017/08/29 19:05:45 by aquint           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,11 +56,11 @@ $(NAME): $(OBJ)
 	@echo "$(GREEN)>>DONE!"
 
 $(PROGRAM):$(SRCFIL)
-	$(MAKE) -C ./libft 
-	$(CC) $(SRCFIL) -L libft -lft $(CFLAGS) -o $(PROGRAM)
+	$(MAKE) -C ./libft_lq 
+	$(CC) $(SRCFIL) -L libft_lq -lft $(CFLAGS) -o $(PROGRAM)
 
 filclean: 
-	$(MAKE) clean -C ./libft  
+	$(MAKE) clean -C ./libft_lq  
 	rm $(PROGRAM)
 clean:
 	@echo "$(RED)>>DELETING OBJECT FILES..."

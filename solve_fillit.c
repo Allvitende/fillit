@@ -6,7 +6,7 @@
 /*   By: aquint <aquint@42.us.org>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/24 00:16:17 by aquint            #+#    #+#             */
-/*   Updated: 2017/08/29 21:13:22 by aquint           ###   ########.fr       */
+/*   Updated: 2017/08/30 15:27:54 by aquint           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,32 @@ int		r_fillit_solver(char **board, t_piece *head, int row, int col)
 	int	valid;
 
 	piece = head->content;
-	ft_putnbr(row);
-	ft_putchar('/');
-	ft_putnbr(col);
-	valid = valid_check(board, piece, row, col);
-//	ft_putnbr(valid);
-		
-	if (valid == FALSE)
+	if (board[row] != '\0')
 	{
-		if (board [row][col] != '\0')
-			r_fillit_solver(board, head, row, col + 1);
-		if (board [row] != '\0')
-			r_fillit_solver(board, head, row + 1, col = 0);
-		return (FALSE);			
-	}
-	if (valid == TRUE)
-	{
-		place_piece(board, piece, row, col);
-		ft_putarray(board);
-		if (head->next != NULL)
+		valid = valid_check(board, piece, row, col);
+		if (valid == FALSE)
 		{
-			head = head->next; 
-			r_fillit_solver(board, head, row, col);
+			if (board [row][col] != '\0')
+				r_fillit_solver(board, head, row, col + 1);
+			if (board [row] != '\0')
+				r_fillit_solver(board, head, row + 1, col = 0);
+			ft_putchar('a');
+			return (FALSE);			
 		}
-		return (TRUE);
+		if (valid == TRUE)
+		{
+			ft_putchar('B');
+			place_piece(board, piece, row, col);
+			if (head->next != NULL)
+			{
+				head = head->next; 
+				r_fillit_solver(board, head, row, col);
+			}
+			ft_putchar('b');
+			return (TRUE);
+		}
 	}
+	ft_putchar('c');
 	return (FALSE);
 }
 
@@ -62,23 +63,14 @@ int		valid_check(char **board, char **piece,  unsigned int row, unsigned int col
 		{
 			if (piece[i][c] != '.')
 			{
-				ft_putchar('-');
-				ft_putnbr(ft_strlen(board[row]));
-				ft_putchar('~');
-				ft_putnbr(ft_strlen(&board[row][col]));
-				ft_putchar('\n');
-**				if (((col + c) > ft_strlen(&board[row][col])) || ((row + i) > ft_strlen(board[row]))) 
-				{
-					ft_putchar('z');
+				if (((col + c) >= ft_strlen(&board[row][col])) || ((row + i) >= ft_strlen(board[row]))) 
 					return (FALSE);
-				}
 				else
 				{
 					if (board[row + i][col + c] == '.')
 						c++;
 					else
 						return (FALSE);
-**					ft_putchar('t');
 				}
 			}
 			else
@@ -140,11 +132,18 @@ char	**fillit_board(int size)
 	return (board);
 }
 
+
+
+
 int		solve_print(t_piece *head)
 {
 	unsigned int 	bsize;
 	char 			**board;	
-	
+	t_piece 		*tmp;
+	int i;
+
+	i = 0;
+	tmp = head;
 	bsize = 2;
 	while ((bsize * bsize) < (head->number * 4))
 		bsize++;
@@ -152,13 +151,22 @@ int		solve_print(t_piece *head)
 	ft_putchar('\n');
 	if (!(board = fillit_board(bsize)))
 		return (0);
-	ft_putarray(board);
-	while ((r_fillit_solver(board, head, 0, 0) == FALSE))
+	while ((r_fillit_solver(board, head, 0, 0)) == 0)
 	{
-//		free(board);
+		while (board[i] != '\0')
+		{
+			free(board[i]);
+			i++;
+		}
+		free(board);
 		if (!(board = fillit_board(++bsize)))
+		{
+			ft_putchar('t');
 			return (0);
+		}
+		head = tmp;
 	}
+	ft_putchar('\n');
 	ft_putarray(board);
 	return (TRUE);
 }

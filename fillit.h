@@ -6,7 +6,7 @@
 /*   By: bschroed <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 21:03:10 by bschroed          #+#    #+#             */
-/*   Updated: 2017/08/29 20:47:54 by aquint           ###   ########.fr       */
+/*   Updated: 2017/08/30 22:45:54 by aquint           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct	s_piece
 	char			**content;
 	size_t			content_size;
 	unsigned int	number;
+	char			alpha;
+	struct s_piece  *head;
 	struct s_piece	*next;
 }				t_piece;
 
@@ -56,11 +58,11 @@ t_piece				*get_pieces(char *buf); //sends file to be validated, saves piece as 
 /*
  *  solve_fillit.c
  */
-int				r_fillit_solver(char **board, t_piece *head, int row, int col);
+char			**r_fillit_solver(char **board, t_piece *head, int row, int col);
 int				valid_check(char **board, char **piece, unsigned  int row, unsigned int col);
 char 			**place_piece(char **board, char **piece, int row, int col);
 char 			**fillit_board(int size);
-int				solve_print(t_piece *head);
+void			solve_print(t_piece *head);
 
 /* quick reaction of functions we likely need. 
  *  * Set 2day array square based on minimum possibility

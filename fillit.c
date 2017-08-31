@@ -6,7 +6,7 @@
 /*   By: bschroed <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 21:00:14 by bschroed          #+#    #+#             */
-/*   Updated: 2017/08/29 19:56:37 by aquint           ###   ########.fr       */
+/*   Updated: 2017/08/30 19:34:26 by aquint           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,6 @@ int		main(int argc, char **argv)
 	ft_putarray(all_pieces->content);
 	
 */  
-	if (solve_print(all_pieces))
-		ft_putchar('\n');
-	else
-		ft_putstr("not solved");
+	solve_print(all_pieces);
 	return (0);
 }

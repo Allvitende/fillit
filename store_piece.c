@@ -6,7 +6,7 @@
 /*   By: bschroed <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 21:00:14 by bschroed          #+#    #+#             */
-/*   Updated: 2017/08/29 19:35:53 by aquint           ###   ########.fr       */
+/*   Updated: 2017/08/30 19:12:58 by aquint           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ t_piece	*fillit_lstnew(char **content, size_t content_size)
 	}
 	new->next = NULL;
 	new->number = 0;
+	new->alpha = 'A';
+	new->head = new;
 	return (new);
 }
 
@@ -113,6 +115,8 @@ t_piece		*get_pieces(char *buf)
 			else
 			{
 				new = fillit_lstnew((array_piece(buf, (loop_count + 65))), 11);
+				new->alpha = (loop_count + 65);
+				new->head = head;
 				piece_append(&head, new);
 			}
 			buf += 21;

@@ -57,21 +57,21 @@ t_piece				*get_pieces(char *buf); //sends file to be validated, saves piece as 
  *  solve_fillit.c
  */
 int				r_fillit_solver(char **board, t_piece *head, int row, int col);
-int				valid_check(char **board, char **piece, unsigned  int row, unsigned int col);
-char 			**place_piece(char **board, char **piece, int row, int col);
+int				valid_check(char **board, t_piece *head, unsigned  int row, unsigned int col);
+int            place_piece(char **board, t_piece *head, int row, int col, int size);
 char 			**fillit_board(int size);
-int				solve_print(t_piece *head);
+int				solve_setup(t_piece *head);
 
-/* quick reaction of functions we likely need. 
+/* quick reaction of functions we likely need.
  *  * Set 2day array square based on minimum possibility
  *  * recursive function to test each block against top left empty corner
- *  * test if 2day array can be placed 
+ *  * test if 2day array can be placed
  */
 
 /*
  * Other things to be consider
- *  * Free used data 
- *  * checking for memory leaks 
- *  * Norminette 
-*/ 
+ *  * Free used data
+ *  * checking for memory leaks
+ *  * Norminette
+*/
 #endif

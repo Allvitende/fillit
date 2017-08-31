@@ -18,39 +18,39 @@
 int		r_fillit_solver(char **board, t_piece *head, int row, int col)
 {
 	char **piece;
-	int	valid;
 
 	piece = head->content;
+
 	if (board[row] != '\0')
 	{
-		valid = valid_check(board, piece, row, col);
-		if (valid == FALSE)
+		if (!(valid_check(board, piece, row, col)))
 		{
 			if (board [row][col] != '\0')
 				r_fillit_solver(board, head, row, col + 1);
 			if (board [row] != '\0')
-				r_fillit_solver(board, head, row + 1, col = 0);
-			ft_putchar('a');
-			return (FALSE);			
+				r_fillit_solver(board, head, row + 1, 0);
+			//ft_putchar('a');
+			//return (FALSE);
 		}
-		if (valid == TRUE)
+		if (valid_check(board, piece, row, col))
 		{
-			ft_putchar('B');
+			//ft_putchar('B');
 			place_piece(board, piece, row, col);
 			if (head->next != NULL)
 			{
-				head = head->next; 
+				head = head->next;
 				r_fillit_solver(board, head, row, col);
 			}
-			ft_putchar('b');
+			//ft_putchar('b');
+			ft_putarray(board);
 			return (TRUE);
 		}
 	}
-	ft_putchar('c');
+	//ft_putchar('c');
 	return (FALSE);
 }
 
-int		valid_check(char **board, char **piece,  unsigned int row, unsigned int col)	
+int		valid_check(char **board, char **piece,  unsigned int row, unsigned int col)
 {
 	unsigned int i;
 	unsigned int c;
@@ -63,7 +63,7 @@ int		valid_check(char **board, char **piece,  unsigned int row, unsigned int col
 		{
 			if (piece[i][c] != '.')
 			{
-				if (((col + c) >= ft_strlen(&board[row][col])) || ((row + i) >= ft_strlen(board[row]))) 
+				if (((col + c) >= ft_strlen(&board[row][col])) || ((row + i) >= ft_strlen(board[row])))
 					return (FALSE);
 				else
 				{
@@ -86,7 +86,7 @@ char	**place_piece(char **board, char **piece, int row, int col)
 {
 	int i;
 	int c;
-	
+
 	i = 0;
 	while (piece[i] != 0)
 	{
@@ -138,7 +138,7 @@ char	**fillit_board(int size)
 int		solve_print(t_piece *head)
 {
 	unsigned int 	bsize;
-	char 			**board;	
+	char 			**board;
 	t_piece 		*tmp;
 	int i;
 
@@ -147,8 +147,8 @@ int		solve_print(t_piece *head)
 	bsize = 2;
 	while ((bsize * bsize) < (head->number * 4))
 		bsize++;
-	ft_putnbr(bsize);
-	ft_putchar('\n');
+	//ft_putnbr(bsize);
+	//ft_putchar('\n');
 	if (!(board = fillit_board(bsize)))
 		return (0);
 	while ((r_fillit_solver(board, head, 0, 0)) == 0)
@@ -161,12 +161,12 @@ int		solve_print(t_piece *head)
 		free(board);
 		if (!(board = fillit_board(++bsize)))
 		{
-			ft_putchar('t');
+			//ft_putchar('t');
 			return (0);
 		}
 		head = tmp;
 	}
-	ft_putchar('\n');
+	//ft_putchar('\n');
 	ft_putarray(board);
 	return (TRUE);
 }

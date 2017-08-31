@@ -24,7 +24,7 @@ NO_COLOR = \x1b[0m
 SRCFIL += fillit.c
 SRCFIL += store_piece.c
 SRCFIL += piece_validation.c
-SRCFIL += solve_fillit.c
+SRCFIL += fillit_solver.c
 
 SRC += libft/ft_putstr.c
 SRC += libft/ft_memset.c
@@ -57,11 +57,11 @@ $(NAME): $(OBJ)
 	@echo "$(GREEN)>>DONE!"
 
 $(PROGRAM):$(SRCFIL)
-	$(MAKE) -C ./libft_lq 
+	$(MAKE) -C ./libft_lq
 	$(CC) $(SRCFIL) -L libft_lq -lft $(CFLAGS) -o $(PROGRAM)
 
-filclean: 
-	$(MAKE) clean -C ./libft_lq  
+filclean:
+	$(MAKE) clean -C ./libft_lq
 	rm $(PROGRAM)
 clean:
 	@echo "$(RED)>>DELETING OBJECT FILES..."

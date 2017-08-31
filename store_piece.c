@@ -26,7 +26,9 @@ void	piece_append(t_piece **head, t_piece *new)
 t_piece	*fillit_lstnew(char **content, size_t content_size)
 {
 	t_piece	*new;
+	size_t i;
 
+	i = 0;
 	if (!(new = (t_piece*)malloc(sizeof(t_piece))))
 		return (NULL);
 	if (content == NULL)
@@ -36,9 +38,14 @@ t_piece	*fillit_lstnew(char **content, size_t content_size)
 	}
 	else
 	{
-		if (!(new->content = (char**)malloc(sizeof(char**) * content_size)))
+		if (!(new->content = (char**)malloc(sizeof(char*) * content_size)))
 			return (NULL);
-		ft_memcpy(new->content, content, (content_size * sizeof(char*)));
+		while (content[i])
+		{
+			new->content[i] = ft_strdup(content[i]);
+			i++;
+		}
+		content_size = i;
 		new->content_size = content_size;
 	}
 	new->next = NULL;
@@ -109,10 +116,10 @@ t_piece		*get_pieces(char *buf)
 		if (check_block(buf) == TRUE)
 		{
 			if (loop_count == 0)
-				head = fillit_lstnew((array_piece(buf, (loop_count + 65))), 11);
+				head = fillit_lstnew((array_piece(buf, (loop_count + 65))), 20);
 			else
 			{
-				new = fillit_lstnew((array_piece(buf, (loop_count + 65))), 11);
+				new = fillit_lstnew((array_piece(buf, (loop_count + 65))), 20);
 				piece_append(&head, new);
 			}
 			buf += 21;

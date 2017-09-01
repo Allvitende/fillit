@@ -27,6 +27,7 @@ t_piece	*fillit_lstnew(char **content, size_t content_size)
 {
 	t_piece	*new;
 	size_t i;
+//	size_t c;
 
 	i = 0;
 	if (!(new = (t_piece*)malloc(sizeof(t_piece))))
@@ -38,14 +39,17 @@ t_piece	*fillit_lstnew(char **content, size_t content_size)
 	}
 	else
 	{
-		if (!(new->content = (char**)malloc(sizeof(char*) * content_size)))
+		while (content[i])
+			i++;
+		if (!(new->content = (char**)malloc(sizeof(char*) * (i + 1))))
 			return (NULL);
+		i = 0;
 		while (content[i])
 		{
 			new->content[i] = ft_strdup(content[i]);
 			i++;
 		}
-		content_size = i;
+		content_size = i + strlen(*content);
 		new->content_size = content_size;
 	}
 	new->next = NULL;

@@ -6,7 +6,7 @@
 /*   By: aquint <aquint@42.us.org>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/24 00:16:17 by aquint            #+#    #+#             */
-/*   Updated: 2017/08/30 15:27:54 by aquint           ###   ########.fr       */
+/*   Updated: 2017/08/31 13:58:34 by aquint           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,35 +20,45 @@ int		r_fillit_solver(char **board, t_piece *head, int row, int col)
 	char **piece;
 	int	valid;
 
-	piece = head->content;
-	if (board[row] != '\0')
+	if (head == NULL)
 	{
-		valid = valid_check(board, piece, row, col);
-		if (valid == FALSE)
+		ft_putchar('b');
+		return (TRUE);
+	}
+	piece = head->content;
+	if (board[row] == '\0')
+	{
+		ft_putchar('c');
+		return (FALSE);
+	}
+	valid = valid_check(board, piece, row, col);
+	if (valid == FALSE)
+	{
+		if (board [row][col] == '\0')
+			r_fillit_solver(board, head, row + 1, 0);
+		else
+			r_fillit_solver(board, head, row, col + 1);
+		return (FALSE);	
+	}
+	else
+	{
+		ft_putchar('B');
+		place_piece(board, piece, row, col);
+		head = head->next;
+		r_fillit_solver(board, head, 0, 0);
+		if (head == NULL)
 		{
-			if (board [row][col] != '\0')
-				r_fillit_solver(board, head, row, col + 1);
-			if (board [row] != '\0')
-				r_fillit_solver(board, head, row + 1, col = 0);
-			ft_putchar('a');
-			return (FALSE);			
-		}
-		if (valid == TRUE)
-		{
-			ft_putchar('B');
-			place_piece(board, piece, row, col);
-			if (head->next != NULL)
-			{
-				head = head->next; 
-				r_fillit_solver(board, head, row, col);
-			}
-			ft_putchar('b');
+			ft_putchar('d');
 			return (TRUE);
 		}
+		else
+		{
+			ft_putchar('e');
+			return (TRUE); // Brodie : change this to FALSE to get it to infinitily expand. 
+		}
 	}
-	ft_putchar('c');
-	return (FALSE);
 }
+
 
 int		valid_check(char **board, char **piece,  unsigned int row, unsigned int col)	
 {
@@ -59,7 +69,7 @@ int		valid_check(char **board, char **piece,  unsigned int row, unsigned int col
 	while (piece[i] != '\0')
 	{
 		c = 0;
-		while (piece[i][c] != 0)
+		while (piece[i][c] != '\0')
 		{
 			if (piece[i][c] != '.')
 			{
@@ -88,10 +98,10 @@ char	**place_piece(char **board, char **piece, int row, int col)
 	int c;
 	
 	i = 0;
-	while (piece[i] != 0)
+	while (piece[i] != '\0')
 	{
 		c = 0;
-		while (piece[i][c] != 0)
+		while (piece[i][c] != '\0')
 		{
 			if (piece[i][c] != '.')
 			{
@@ -116,11 +126,11 @@ char	**fillit_board(int size)
 	int col;
 
 	i = 0;
-	if (!(board = (char**)ft_memalloc(sizeof(**board) * (size + 1))))
+	if (!(board = (char**)ft_memalloc(sizeof(*board) * (size + 1))))
 		return (NULL);
 	while (i < size)
 	{
-		if (!(board[i] = (char*)ft_memalloc(sizeof(*board) * (size + 1))))
+		if (!(board[i] = (char*)ft_memalloc(sizeof(board) * (size + 1))))
 			return (NULL);
 		col = 0;
 		while (col < size)
@@ -140,7 +150,8 @@ int		solve_print(t_piece *head)
 	unsigned int 	bsize;
 	char 			**board;	
 	t_piece 		*tmp;
-	int i;
+	int 			i;
+//	int 			result;
 
 	i = 0;
 	tmp = head;
@@ -153,6 +164,8 @@ int		solve_print(t_piece *head)
 		return (0);
 	while ((r_fillit_solver(board, head, 0, 0)) == 0)
 	{
+		ft_putchar('\n');
+		ft_putarray(board);
 		while (board[i] != '\0')
 		{
 			free(board[i]);
@@ -164,7 +177,9 @@ int		solve_print(t_piece *head)
 			ft_putchar('t');
 			return (0);
 		}
+		ft_putnbr(bsize);
 		head = tmp;
+
 	}
 	ft_putchar('\n');
 	ft_putarray(board);

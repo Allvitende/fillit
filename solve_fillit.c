@@ -20,15 +20,14 @@ int		r_fillit_solver(char **board, t_piece *head, int row, int col)
 	char **piece;
 	int	valid;
 
-	if (head == NULL)
+	if (head->content ==  NULL)
 	{
-		ft_putchar('b');
+		head->head->end = 1;
 		return (TRUE);
 	}
 	piece = head->content;
 	if (board[row] == '\0')
 	{
-		ft_putchar('c');
 		return (FALSE);
 	}
 	valid = valid_check(board, piece, row, col);
@@ -42,19 +41,16 @@ int		r_fillit_solver(char **board, t_piece *head, int row, int col)
 	}
 	else
 	{
-		ft_putchar('B');
 		place_piece(board, piece, row, col);
 		head = head->next;
 		r_fillit_solver(board, head, 0, 0);
-		if (head == NULL)
+		if (head->head->end == 1)
 		{
-			ft_putchar('d');
 			return (TRUE);
 		}
 		else
 		{
-			ft_putchar('e');
-			return (TRUE); // Brodie : change this to FALSE to get it to infinitily expand. 
+			return (FALSE); 
 		}
 	}
 }
@@ -66,29 +62,33 @@ int		valid_check(char **board, char **piece,  unsigned int row, unsigned int col
 	unsigned int c;
 
 	i = 0;
+	c = 0;
 	while (piece[i] != '\0')
 	{
 		c = 0;
-		while (piece[i][c] != '\0')
+		while(piece[i][c] != '\0')
 		{
 			if (piece[i][c] != '.')
 			{
-				if (((col + c) >= ft_strlen(&board[row][col])) || ((row + i) >= ft_strlen(board[row]))) 
+				if (((col + c) >= (ft_strlen(board[row]))) || ((row + i) >= (ft_strlen(board[row])))) 
+				{
 					return (FALSE);
+				}
 				else
 				{
 					if (board[row + i][col + c] == '.')
 						c++;
 					else
+					{
 						return (FALSE);
+					}
 				}
-			}
+			}	
 			else
 				c++;
 		}
 		i++;
-
-	}
+	}	
 	return (TRUE);
 }
 
@@ -98,14 +98,14 @@ char	**place_piece(char **board, char **piece, int row, int col)
 	int c;
 	
 	i = 0;
-	while (piece[i] != '\0')
+	while (piece[i])
 	{
 		c = 0;
-		while (piece[i][c] != '\0')
+		while(piece[i][c] != '\0')
 		{
 			if (piece[i][c] != '.')
 			{
-				if (board[row + i][col + c] == '.')
+				if (board[row + i][col + c] == '.' )
 				{
 					board[row + i][col + c] = piece[i][c];
 					c++;
@@ -128,15 +128,17 @@ char	**fillit_board(int size)
 	i = 0;
 	if (!(board = (char**)ft_memalloc(sizeof(*board) * (size + 1))))
 		return (NULL);
+	bzero(board, size + 1);
 	while (i < size)
 	{
 		if (!(board[i] = (char*)ft_memalloc(sizeof(board) * (size + 1))))
 			return (NULL);
+		bzero(board[i], size + 1);
 		col = 0;
 		while (col < size)
 			board[i][col++] = '.';
 		board[i][col] = '\0';
-		i++;
+		i++;	
 	}
 	board[i] = NULL;
 	return (board);
@@ -151,22 +153,17 @@ int		solve_print(t_piece *head)
 	char 			**board;	
 	t_piece 		*tmp;
 	int 			i;
-//	int 			result;
 
 	i = 0;
 	tmp = head;
 	bsize = 2;
-	while ((bsize * bsize) < (head->number * 4))
+	while ((bsize * bsize) <= (head->number * 4))
 		bsize++;
-	ft_putnbr(bsize);
-	ft_putchar('\n');
 	if (!(board = fillit_board(bsize)))
 		return (0);
 	while ((r_fillit_solver(board, head, 0, 0)) == 0)
 	{
-		ft_putchar('\n');
-		ft_putarray(board);
-		while (board[i] != '\0')
+		while (board[i])
 		{
 			free(board[i]);
 			i++;
@@ -174,12 +171,9 @@ int		solve_print(t_piece *head)
 		free(board);
 		if (!(board = fillit_board(++bsize)))
 		{
-			ft_putchar('t');
 			return (0);
 		}
-		ft_putnbr(bsize);
 		head = tmp;
-
 	}
 	ft_putchar('\n');
 	ft_putarray(board);

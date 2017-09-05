@@ -56,7 +56,7 @@ $(NAME): $(OBJ)
 	@ar rcs $@ $+
 	@echo "$(GREEN)>>DONE!"
 
-$(PROGRAM):$(SRCFIL)
+$(PROGRAM): $(SRCFIL)
 	$(MAKE) -C ./libft_lq 
 	$(CC) $(SRCFIL) -L libft_lq -lft $(CFLAGS) -o $(PROGRAM)
 

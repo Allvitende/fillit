@@ -37,7 +37,7 @@ int		main(int argc, char **argv)
 	}
 	ft_putarray(all_pieces->content);
 	
-*/  
+*/ 
 	if (solve_print(all_pieces))
 		ft_putchar('\n');
 	else

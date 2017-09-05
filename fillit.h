@@ -25,6 +25,8 @@ typedef struct	s_piece
 	char			**content;
 	size_t			content_size;
 	unsigned int	number;
+	int				end;
+	struct s_piece 	*head;
 	struct s_piece	*next;
 }				t_piece;
 

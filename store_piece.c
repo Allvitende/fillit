@@ -6,27 +6,28 @@
 /*   By: bschroed <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 21:00:14 by bschroed          #+#    #+#             */
-/*   Updated: 2017/08/29 19:35:53 by aquint           ###   ########.fr       */
+/*   Updated: 2017/09/06 00:23:36 by aquint           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./libft_lq/libft.h"
 #include "fillit.h"
 
-void	piece_append(t_piece **head, t_piece *new)
+void				piece_append(t_piece **head, t_piece *new)
 {
-	t_piece	*tmp;
+	t_piece			*tmp;
 
 	tmp = *head;
 	while (tmp->next)
 		tmp = tmp->next;
+	new->prev = tmp;
 	tmp->next = new;
 }
 
-t_piece	*fillit_lstnew(char **content, size_t content_size)
+t_piece				*fillit_lstnew(char **content, size_t content_size)
 {
-	t_piece	*new;
-	size_t	i;
+	t_piece			*new;
+	size_t			i;
 
 	i = 0;
 	if (!(new = (t_piece*)ft_memalloc(sizeof(t_piece))))
@@ -43,7 +44,7 @@ t_piece	*fillit_lstnew(char **content, size_t content_size)
 		if (!(new->content = (char**)ft_memalloc(sizeof(char*) * (i + 1))))
 			return (NULL);
 		i = 0;
-		while (content[i])
+		while (content[i] != '\0')
 		{
 			new->content[i] = ft_strdup(content[i]);
 			i++;
@@ -52,14 +53,13 @@ t_piece	*fillit_lstnew(char **content, size_t content_size)
 	}
 	new->next = NULL;
 	new->end = 0;
-	new->number = 0;
 	return (new);
 }
 
-char	*fillit_trim(char *dst, char *src, char c)
+char		*fillit_trim(char *dst, char *src, char c)
 {
-	int i;
-	int i2;
+	int		i;
+	int		i2;
 
 	i = 0;
 	i2 = 0;
@@ -89,14 +89,13 @@ char	*fillit_trim(char *dst, char *src, char c)
 		else
 			i = i + 5;
 	}
-	dst[i2] = '\0';
-	return(dst);
+	return (dst);
 }
 
-char	**array_piece(char *buf, char c)
+char		**array_piece(char *buf, char c)
 {
-	char *trim;
-	char **p_array;
+	char	*trim;
+	char	**p_array;
 
 	if (!(trim = (char*)ft_memalloc(sizeof(trim) * 10)))
 		return (NULL);
@@ -104,11 +103,11 @@ char	**array_piece(char *buf, char c)
 	trim = fillit_trim(trim, buf, c);
 	if (!(p_array = ft_strsplit(trim, '\n')))
 		return (NULL);
-	free (trim);
+	free(trim);
 	return (p_array);
 }
 
-t_piece		*get_pieces(char *buf)
+t_piece				*get_pieces(char *buf)
 {
 	unsigned int	loop_count;
 	t_piece			*head;
@@ -120,7 +119,12 @@ t_piece		*get_pieces(char *buf)
 		if (check_block(buf) == TRUE)
 		{
 			if (loop_count == 0)
+			{
 				head = fillit_lstnew((array_piece(buf, (loop_count + 65))), 1);
+				head->prev = NULL;
+				head->number = loop_count + 1;
+				head->head = head;
+			}
 			else
 			{
 				new = fillit_lstnew((array_piece(buf, (loop_count + 65))), 1);
@@ -137,9 +141,9 @@ t_piece		*get_pieces(char *buf)
 			exit(EXIT_FAILURE);
 		}
 	}
-	head->number = loop_count;
+	head->end = loop_count - 1;
 	new = fillit_lstnew(NULL, 0);
 	new->head = head;
-	piece_append(&head,new);
+	piece_append(&head, new);
 	return (head);
 }

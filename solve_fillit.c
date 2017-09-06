@@ -6,7 +6,7 @@
 /*   By: aquint <aquint@42.us.org>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/24 00:16:17 by aquint            #+#    #+#             */
-/*   Updated: 2017/08/31 13:58:34 by aquint           ###   ########.fr       */
+/*   Updated: 2017/09/06 00:41:15 by aquint           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		r_fillit_solver(char **board, t_piece *head, int row, int col)
 {
 	char **piece;
 	int	valid;
-
+	
 	if (head->content ==  NULL)
 	{
 		head->head->end = 1;
@@ -28,6 +28,14 @@ int		r_fillit_solver(char **board, t_piece *head, int row, int col)
 	piece = head->content;
 	if (board[row] == '\0')
 	{
+//		ft_putarray(board);
+//		ft_putchar('\n');
+		if (head->prev != NULL)
+		{
+			head->head->end = -1;
+			return (FALSE);
+		}
+		head->end = 0;
 		return (FALSE);
 	}
 	valid = valid_check(board, piece, row, col);
@@ -37,21 +45,24 @@ int		r_fillit_solver(char **board, t_piece *head, int row, int col)
 			r_fillit_solver(board, head, row + 1, 0);
 		else
 			r_fillit_solver(board, head, row, col + 1);
-		return (FALSE);	
+		return (FALSE);
 	}
 	else
 	{
 		place_piece(board, piece, row, col);
 		head = head->next;
 		r_fillit_solver(board, head, 0, 0);
+		if (head->head->end == - 1)
+		{
+			head = head->prev;
+			delete_piece(board, head);
+			r_fillit_solver(board, head, row, col + 1);
+		}
 		if (head->head->end == 1)
 		{
 			return (TRUE);
 		}
-		else
-		{
-			return (FALSE); 
-		}
+		return (FALSE); 
 	}
 }
 
@@ -119,6 +130,31 @@ char	**place_piece(char **board, char **piece, int row, int col)
 	return (board);
 }
 
+char	**delete_piece(char **board, t_piece *head)
+{
+	int i;
+	int c;
+	char ch;
+
+	i = 0;
+	ch = (head->number) + 64;
+	while (board[i] != '\0')
+	{
+		c = 0;
+		while(board[i][c] != '\0')
+		{
+			if (board[i][c] == ch )
+			{
+				board[i][c] = '.';
+			}
+			c++;
+		}
+		i++;
+	}
+	return (board);
+}
+
+
 char	**fillit_board(int size)
 {
 	char **board;
@@ -149,7 +185,7 @@ char	**fillit_board(int size)
 
 int		solve_print(t_piece *head)
 {
-	unsigned int 	bsize;
+	int 			bsize;
 	char 			**board;	
 	t_piece 		*tmp;
 	int 			i;
@@ -157,7 +193,7 @@ int		solve_print(t_piece *head)
 	i = 0;
 	tmp = head;
 	bsize = 2;
-	while ((bsize * bsize) <= (head->number * 4))
+	while ((bsize * bsize) <= (head->end * 4))
 		bsize++;
 	if (!(board = fillit_board(bsize)))
 		return (0);
@@ -175,7 +211,6 @@ int		solve_print(t_piece *head)
 		}
 		head = tmp;
 	}
-	ft_putchar('\n');
 	ft_putarray(board);
 	return (TRUE);
 }

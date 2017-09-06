@@ -6,7 +6,7 @@
 /*   By: bschroed <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 21:00:14 by bschroed          #+#    #+#             */
-/*   Updated: 2017/08/29 19:05:11 by aquint           ###   ########.fr       */
+/*   Updated: 2017/09/05 20:50:29 by aquint           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int		check_block(char *buf)
 		line_count++;
 		buf += 5;
 	}
-	if (line_count == 4 && *buf == '\n')
+	if ((line_count == 4) && ((*buf == '\n') || (*buf == 0)))
 		return (valid_piece(buf_cpy));
 	return (FALSE);
 }
@@ -102,7 +102,7 @@ char	*read_file(char *file)
 	}
 	ft_memset(buf, 0, sizeof(buf));
 	bytes_read = read(fd, buf, 546);
-	if (bytes_read % 21 != 0 || bytes_read == -1 || read(fd, buf, 1)) //find out if /n at very end of file
+	if ((bytes_read + 1)  % 21 != 0 || bytes_read == -1 || read(fd, buf, 1)) //find out if /n at very end of file
 	{
 		ft_puterror("error: invalid file.\n");
 		exit(EXIT_FAILURE);

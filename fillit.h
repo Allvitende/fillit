@@ -49,7 +49,7 @@ char			*read_file(char *file);
 
 void			piece_append(t_piece **head, t_piece *new);
 t_piece			*fillit_lstnew(char **content, size_t content_size);
-char			*fillit_trim(char *dst, char *src, char c);
+char			*fillit_trim(char *dst, char *src, char c, int i, int i2);
 char			**array_piece(char *buf, char c);
 t_piece			*get_pieces(char *buf);
 

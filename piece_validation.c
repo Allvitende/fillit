@@ -82,7 +82,7 @@ int		check_block(char *buf)
 		line_count++;
 		buf += 5;
 	}
-	if ((line_count == 4) && ((*buf == '\n') || (*buf == 0)))
+	if ((line_count == 4) && (*buf == '\n'))
 		return (valid_piece(buf_cpy));
 	return (FALSE);
 }
@@ -91,7 +91,7 @@ char	*read_file(char *file)
 {
 	int		fd;
 	int		bytes_read;
-	char	buf[546];
+	char	buf[547];
 	char	*buf_cpy;
 
 	if ((fd = open(file, O_RDONLY)) == -1)
@@ -101,6 +101,7 @@ char	*read_file(char *file)
 	}
 	ft_memset(buf, 0, sizeof(buf));
 	bytes_read = read(fd, buf, 546);
+	buf[bytes_read] = '\n';
 	if ((bytes_read + 1) % 21 != 0 || bytes_read == -1 || read(fd, buf, 1))
 	{
 		ft_puterror("error: invalid file.\n");

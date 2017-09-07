@@ -26,10 +26,17 @@ int		main(int argc, char **argv)
 		return (1);
 	}
 	buf = read_file(argv[1]);
-	all_pieces = get_pieces(buf);
+	if (!(all_pieces = get_pieces(buf)))
+	{
+		ft_puterror("error:invalid blaock\n");
+		exit(EXIT_FAILURE);
+	}
+
 	if (solve_print(all_pieces))
 		return (0);
 	else
-		ft_putstr("not solved");
+	{
+		ft_puterror("error:doesnt solve\n");
+	}
 	return (0);
 }

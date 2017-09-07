@@ -18,6 +18,7 @@ void				piece_append(t_piece **head, t_piece *new)
 	t_piece			*tmp;
 
 	tmp = *head;
+	new->head = tmp;
 	while (tmp->next)
 		tmp = tmp->next;
 	new->prev = tmp;
@@ -52,17 +53,13 @@ t_piece				*fillit_lstnew(char **content, size_t content_size)
 		new->content_size = content_size;
 	}
 	new->next = NULL;
+	new->prev = NULL;
 	new->end = 0;
 	return (new);
 }
 
-char		*fillit_trim(char *dst, char *src, char c)
+char		*fillit_trim(char *dst, char *src, char c, int i, int i2)
 {
-	int		i;
-	int		i2;
-
-	i = 0;
-	i2 = 0;
 	while (i < 19)
 	{
 		if (hash_count(&src[i], 4) != 0)
@@ -100,14 +97,14 @@ char		**array_piece(char *buf, char c)
 	if (!(trim = (char*)ft_memalloc(sizeof(trim) * 10)))
 		return (NULL);
 	ft_bzero(trim, 10);
-	trim = fillit_trim(trim, buf, c);
+	trim = fillit_trim(trim, buf, c, 0, 0);
 	if (!(p_array = ft_strsplit(trim, '\n')))
 		return (NULL);
 	free(trim);
 	return (p_array);
 }
 
-t_piece				*get_pieces(char *buf)
+t_piece		*get_pieces(char *buf)
 {
 	unsigned int	loop_count;
 	t_piece			*head;
@@ -118,32 +115,20 @@ t_piece				*get_pieces(char *buf)
 	{
 		if (check_block(buf) == TRUE)
 		{
+			new = fillit_lstnew((array_piece(buf, (loop_count + 65))), 1);
+			new->number = loop_count + 1;
 			if (loop_count == 0)
-			{
-				head = fillit_lstnew((array_piece(buf, (loop_count + 65))), 1);
-				head->prev = NULL;
-				head->number = loop_count + 1;
-				head->head = head;
-			}
+				head = new;
 			else
-			{
-				new = fillit_lstnew((array_piece(buf, (loop_count + 65))), 1);
-				new->number = loop_count + 1;
-				new->head = head;
 				piece_append(&head, new);
-			}
 			buf += 21;
 			loop_count++;
 		}
 		else
-		{
-			ft_puterror("error: invalid block\n");
-			exit(EXIT_FAILURE);
-		}
+			return (NULL);
 	}
+	head->head = head;
 	head->end = loop_count - 1;
-	new = fillit_lstnew(NULL, 0);
-	new->head = head;
-	piece_append(&head, new);
+	piece_append(&head, fillit_lstnew(NULL, 0));
 	return (head);
 }

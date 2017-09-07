@@ -87,7 +87,6 @@ int		check_block(char *buf)
 	return (FALSE);
 }
 
-
 char	*read_file(char *file)
 {
 	int		fd;
@@ -102,7 +101,7 @@ char	*read_file(char *file)
 	}
 	ft_memset(buf, 0, sizeof(buf));
 	bytes_read = read(fd, buf, 546);
-	if ((bytes_read + 1)  % 21 != 0 || bytes_read == -1 || read(fd, buf, 1)) //find out if /n at very end of file
+	if ((bytes_read + 1) % 21 != 0 || bytes_read == -1 || read(fd, buf, 1))
 	{
 		ft_puterror("error: invalid file.\n");
 		exit(EXIT_FAILURE);
@@ -113,5 +112,5 @@ char	*read_file(char *file)
 		exit(EXIT_FAILURE);
 	}
 	buf_cpy = ft_strdup(buf);
-	return(buf_cpy);
+	return (buf_cpy);
 }

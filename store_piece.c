@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft_lq/libft.h"
+#include "./libft/libft.h"
 #include "fillit.h"
 
 void				piece_append(t_piece **head, t_piece *new)
@@ -73,11 +73,11 @@ char		*fillit_trim(char *dst, char *src, char c)
 					dst[i2++] = c;
 				if (i < 15 && (src[i] == '.' && (src[i + 5] == '#')))
 					dst[i2++] = src[i];
-				else if (i < 10 && (src[i] == '.' && (src[i + 10] == '#')))
+				else if (i <= 10 && (src[i] == '.' && (src[i + 10] == '#')))
 					dst[i2++] = src[i];
 				if (i > 4 && (src[i] == '.' && (src[i - 5] == '#')))
 					dst[i2++] = src[i];
-				else if (i > 10 && (src[i] == '.' && (src[i - 10] == '#')))
+				else if (i >= 10 && (src[i] == '.' && (src[i - 10] == '#')))
 					dst[i2++] = src[i];
 				if (src[i] == '\n')
 					dst[i2++] = '\n';

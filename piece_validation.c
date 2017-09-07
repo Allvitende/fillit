@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft_lq/libft.h"
+#include "./libft/libft.h"
 #include "fillit.h"
 #define TRUE 1
 #define FALSE 0

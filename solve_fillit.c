@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft_lq/libft.h"
+#include "./libft/libft.h"
 #include "fillit.h"
 #define TRUE 1
 #define FALSE 0
@@ -67,10 +67,10 @@ int		r_fillit_solver(char **board, t_piece *head, int row, int col)
 }
 
 
-int		valid_check(char **board, char **piece,  unsigned int row, unsigned int col)	
+int		valid_check(char **board, char **piece, int row, int col)	
 {
-	unsigned int i;
-	unsigned int c;
+	int i;
+	int c;
 
 	i = 0;
 	c = 0;
@@ -81,7 +81,7 @@ int		valid_check(char **board, char **piece,  unsigned int row, unsigned int col
 		{
 			if (piece[i][c] != '.')
 			{
-				if (((col + c) >= (ft_strlen(board[row]))) || ((row + i) >= (ft_strlen(board[row])))) 
+				if (((col + c) >= (int)(ft_strlen(board[row]))) || ((row + i) >= (int)(ft_strlen(board[row])))) 
 				{
 					return (FALSE);
 				}

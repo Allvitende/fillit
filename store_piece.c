@@ -84,8 +84,12 @@ char		**array_piece(char *buf, char c)
 {
 	char	*trim;
 	char	**p_array;
-	int		i[3] = { 0 };
+	size_t	d;
+	int		i[3];
 
+	d = 0;
+	while (d < 3)
+		i[d++] = 0;
 	if (!(trim = (char*)ft_memalloc(sizeof(trim) * 10)))
 		return (NULL);
 	ft_bzero(trim, 10);

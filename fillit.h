@@ -30,7 +30,8 @@ typedef struct	s_piece
 	struct s_piece	*next;
 }				t_piece;
 
-/* fillit.c  */
+//:wq
+//fillit.c  */
 
 int				solve_print(t_piece *head);
 

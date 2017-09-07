@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_arraydel.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aquint <aquint@42.us.org>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/17 20:41:23 by aquint            #+#    #+#             */
-/*   Updated: 2017/07/21 00:43:30 by aquint           ###   ########.fr       */
+/*   Created: 2017/07/11 16:51:45 by aquint            #+#    #+#             */
+/*   Updated: 2017/07/21 02:48:43 by aquint           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
-#include <string.h>
 
-char	*ft_strdup(const char *s1)
+void	ft_arraydel(char **array)
 {
-	char *str;
+	int i;
 
-	str = (char*)ft_memalloc(sizeof(str) * (ft_strlen(s1) + 1));
-	if (str != NULL)
+	i = 0;
+	if (array)
 	{
-		return (ft_strcpy(str, s1));
+		while (array[i])
+			free(array[i++]);
+		free(array);
+		*array = NULL;
 	}
-	else
-		return (NULL);
 }

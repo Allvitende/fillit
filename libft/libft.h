@@ -87,4 +87,5 @@ char			*ft_strcut(char const *s, char dl);
 int				ft_dlcount(const char *s, char d);
 void			ft_puterror(char const *s);
 void			ft_putarray(char **s);
+void			ft_arraydel(char **array);
 #endif

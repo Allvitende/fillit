@@ -13,31 +13,25 @@
 #include "./libft/libft.h"
 #include "fillit.h"
 
-void				piece_append(t_piece **head, t_piece *new)
+void		piece_append(t_piece **head, t_piece *new)
 {
-	t_piece			*tmp;
+	t_piece		*tmp;
 
 	tmp = *head;
 	new->head = tmp;
 	while (tmp->next)
 		tmp = tmp->next;
-	new->prev = tmp;
 	tmp->next = new;
 }
 
-t_piece				*fillit_lstnew(char **content, size_t content_size)
+t_piece		*fillit_lstnew(char **content, size_t i)
 {
-	t_piece			*new;
-	size_t			i;
+	t_piece		*new;
 
-	i = 0;
 	if (!(new = (t_piece*)ft_memalloc(sizeof(t_piece))))
 		return (NULL);
-	if (content_size == 0)
-	{
-		new->content_size = 0;
+	if (content == NULL)
 		new->content = NULL;
-	}
 	else
 	{
 		while (content[i])
@@ -50,41 +44,38 @@ t_piece				*fillit_lstnew(char **content, size_t content_size)
 			new->content[i] = ft_strdup(content[i]);
 			i++;
 		}
-		new->content_size = content_size;
 	}
+	new->content_size = i;
 	new->next = NULL;
-	new->prev = NULL;
 	new->end = 0;
 	return (new);
 }
 
-char		*fillit_trim(char *dst, char *src, char c, int i, int i2)
+char		*fillit_trim(char *dst, char *src, char c, int *i)
 {
-	while (i < 19)
+	while (i[1] < 19)
 	{
-		if (hash_count(&src[i], 4) != 0)
+		if (hash_count(&src[i[1]], 4) != 0)
 		{
-			while (src[i] != '\n')
+			while (src[i[1]] != '\n')
 			{
-				if (src[i] == '#')
-					dst[i2++] = c;
-				if (i < 15 && (src[i] == '.' && (src[i + 5] == '#')))
-					dst[i2++] = src[i];
-				else if (i <= 10 && (src[i] == '.' && (src[i + 10] == '#')))
-					dst[i2++] = src[i];
-				if (i > 4 && (src[i] == '.' && (src[i - 5] == '#')))
-					dst[i2++] = src[i];
-				else if (i >= 10 && (src[i] == '.' && (src[i - 10] == '#')))
-					dst[i2++] = src[i];
-				if (src[i] == '\n')
-					dst[i2++] = '\n';
-				i++;
+				if (src[i[1]] == '#')
+					dst[i[2]++] = c;
+				if ((i[1] < 15 && (src[i[1]] == '.' && (src[i[1] + 5] == '#')))
+			|| (i[1] <= 10 && (src[i[1]] == '.' && (src[i[1] + 10] == '#'))))
+					dst[i[2]++] = src[i[1]];
+				if ((i[1] > 4 && (src[i[1]] == '.' && (src[i[1] - 5] == '#')))
+			|| (i[1] >= 10 && (src[i[1]] == '.' && (src[i[1] - 10] == '#'))))
+					dst[i[2]++] = src[i[1]];
+				if (src[i[1]] == '\n')
+					dst[i[2]++] = '\n';
+				i[1]++;
 			}
-			dst[i2++] = '\n';
-			i++;
+			dst[i[2]++] = '\n';
+			i[1]++;
 		}
 		else
-			i = i + 5;
+			i[1] = i[1] + 5;
 	}
 	return (dst);
 }
@@ -93,14 +84,15 @@ char		**array_piece(char *buf, char c)
 {
 	char	*trim;
 	char	**p_array;
+	int		i[3] = { 0 };
 
 	if (!(trim = (char*)ft_memalloc(sizeof(trim) * 10)))
 		return (NULL);
 	ft_bzero(trim, 10);
-	trim = fillit_trim(trim, buf, c, 0, 0);
+	trim = fillit_trim(trim, buf, c, i);
 	if (!(p_array = ft_strsplit(trim, '\n')))
 		return (NULL);
-	free(trim);
+	ft_strdel(&trim);
 	return (p_array);
 }
 
@@ -115,7 +107,7 @@ t_piece		*get_pieces(char *buf)
 	{
 		if (check_block(buf) == TRUE)
 		{
-			new = fillit_lstnew((array_piece(buf, (loop_count + 65))), 1);
+			new = fillit_lstnew((array_piece(buf, (loop_count + 65))), 0);
 			new->number = loop_count + 1;
 			if (loop_count == 0)
 				head = new;

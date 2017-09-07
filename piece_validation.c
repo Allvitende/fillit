@@ -96,7 +96,7 @@ char	*read_file(char *file)
 
 	if ((fd = open(file, O_RDONLY)) == -1)
 	{
-		ft_puterror("error: opening file.\n");
+		ft_putstr("error\n");
 		exit(EXIT_FAILURE);
 	}
 	ft_memset(buf, 0, sizeof(buf));
@@ -104,12 +104,12 @@ char	*read_file(char *file)
 	buf[bytes_read] = '\n';
 	if ((bytes_read + 1) % 21 != 0 || bytes_read == -1 || read(fd, buf, 1))
 	{
-		ft_puterror("error: invalid file.\n");
+		ft_putstr("error\n");
 		exit(EXIT_FAILURE);
 	}
 	if (close(fd) == -1)
 	{
-		ft_puterror("error: closing file.\n");
+		ft_putstr("error\n");
 		exit(EXIT_FAILURE);
 	}
 	buf_cpy = ft_strdup(buf);

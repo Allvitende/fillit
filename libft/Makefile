@@ -81,6 +81,7 @@ SRC = 	ft_atoi.c \
 		ft_dlcount.c \
 		ft_puterror.c \
 		ft_putarray.c \
+		ft_arraydel.c \
 
 HEADER = libft.h
 
